@@ -107,9 +107,8 @@ export default function CollectionSection() {
           alt=""
           width={0}
           height={0}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="max-h-full w-auto object-contain"
-          style={{ height: '100%', width: 'auto', maxWidth: '100vw' }}
+          sizes="(max-width: 768px) 100vh, 50vw"
+          className="h-full w-auto object-contain md:max-w-[100vw]"
         />
       </div>
       
