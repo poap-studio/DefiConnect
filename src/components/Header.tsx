@@ -8,7 +8,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="absolute top-0 left-0 w-full z-50 bg-white">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
       <div className="flex items-center justify-between px-5 py-6 md:px-8 md:py-6">
         <div className="h-6 w-56 md:h-8 md:w-72 relative">
           <Image
