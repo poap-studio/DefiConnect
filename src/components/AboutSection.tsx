@@ -135,8 +135,8 @@ export default function AboutSection() {
                     {/* Circle graphic */}
                     <div className="w-64 h-48 mx-auto relative aspect-[250/184]">
                       <Image
-                        src="/circle-graphic.svg"
-                        alt=""
+                        src={card.image}
+                        alt={card.title}
                         fill
                         className="object-contain"
                       />
