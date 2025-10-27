@@ -1,22 +1,29 @@
-# DeFiConnect Landing Page
+# DeFiConnect POAP Adventure Platform
 
-A responsive landing page for the DeFiConnect event, built with Next.js 16, TypeScript, and Tailwind CSS. This page matches the Figma design exactly and is optimized for both desktop and mobile experiences.
+🎯 **Transform DeFiConnect into a living treasure map!**
 
-## 🚀 Features
+An interactive POAP (Proof of Attendance Protocol) collection platform designed to gamify the DeFi event experience. Attendees can explore the venue, collect exclusive POAPs, and unlock rewards as they progress through their adventure.
 
-- **Responsive Design**: Optimized for mobile-first experience with desktop support
-- **Interactive Sections**: 
-  - Hero section with animated graphics
-  - Discover/Collect/Unlock section with mobile slider
-  - Collection section with POAP cards and pagination
-  - Rewards section with mobile slider (3 pages)
-  - Interactive map with level toggles (Level 1, Level 2, Sponsors)
-  - How to collect step-by-step guide
-- **Mobile Optimizations**:
-  - Touch-friendly sliders
-  - Pagination dots for navigation
-  - Responsive breakpoints
-- **SEO Optimized**: Meta tags, Open Graph, and Twitter Cards
+## 🌟 Features
+
+### 🏆 Core Functionality
+- **Interactive POAP Collection**: Browse and discover 20 different POAPs from various event activities
+- **Smart Search**: Validate and search for POAP collections using email, wallet address (0x...), or ENS (.eth)
+- **Reward System**: Unlock exclusive rewards at 10, 15, and 20 POAP milestones
+- **Interactive Map**: Navigate through different venue levels with POAP location markers
+- **Mobile-First Design**: Optimized sliders and touch interactions for mobile users
+
+### 🎨 Design System
+- **Glassmorphism UI**: Modern glass-like effects with subtle transparency and blur
+- **Custom Typography**: Monospace821 font family for authentic tech aesthetic
+- **Responsive Layout**: Seamless experience across desktop, tablet, and mobile
+- **Consistent Branding**: DeFi-red color scheme with professional white accents
+
+### 📱 User Experience
+- **Smooth Animations**: Fluid transitions and interactive elements
+- **Touch-Friendly**: Swipe navigation and touch-optimized controls
+- **Accessibility**: ARIA labels and keyboard navigation support
+- **Performance**: Optimized images and efficient component rendering
 
 ## 🛠️ Tech Stack
 
