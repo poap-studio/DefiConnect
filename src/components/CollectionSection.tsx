@@ -99,16 +99,16 @@ export default function CollectionSection() {
   }
 
   return (
-    <section id="collection" className="relative bg-defi-red px-5 py-12 md:px-8 md:py-16 overflow-x-hidden">
+    <section id="collection" className="relative bg-defi-red px-5 py-12 md:px-8 md:py-16">
       {/* Background Image - Positioned lower to not interfere with title */}
-      <div className="absolute inset-0 top-48 flex justify-center items-center overflow-hidden">
+      <div className="absolute inset-0 top-48 flex justify-center items-center overflow-visible">
         <Image
           src="/collection-bg.png"
           alt=""
           width={0}
           height={0}
           sizes="(max-width: 768px) 100vh, 50vw"
-          className="h-full w-auto object-contain md:max-w-[100vw]"
+          className="h-full w-auto object-contain md:max-w-[100vw] min-h-full"
         />
       </div>
       
