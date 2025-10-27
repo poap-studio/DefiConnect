@@ -43,9 +43,9 @@ export default function HowToCollectSection() {
         </div>
 
         {/* Steps */}
-        <div className="flex flex-col gap-6 md:gap-8">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8">
           {steps.map((step) => (
-            <div key={step.number} className="flex flex-col items-center text-center">
+            <div key={step.number} className="flex flex-col items-center text-center md:flex-1">
               {/* Step Number */}
               <div className="w-16 h-16 bg-white/20 border border-white rounded-full flex items-center justify-center mb-4">
                 <span className="text-white font-monospac font-bold text-display-sm">
