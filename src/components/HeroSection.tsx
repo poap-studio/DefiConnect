@@ -8,8 +8,8 @@ export default function HeroSection() {
     <section className="relative bg-defi-red overflow-hidden">
       {/* Background Graphics */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Vector graphics positioned to match Figma design */}
-        <div className="absolute -top-64 -right-80 w-[1406px] h-[1096px] transform rotate-[70.97deg] scale-y-[-1] skew-x-[7.15deg]">
+        {/* Vector graphics positioned to match Figma design - hidden on mobile to prevent overflow */}
+        <div className="hidden md:block absolute -top-64 -right-80 w-[1406px] h-[1096px] transform rotate-[70.97deg] scale-y-[-1] skew-x-[7.15deg]">
           <Image
             src="/hero-vector.svg"
             alt=""
@@ -17,7 +17,7 @@ export default function HeroSection() {
             className="object-contain"
           />
         </div>
-        <div className="absolute -top-96 -left-96 w-[1429px] h-[2137px] transform rotate-180 scale-y-[-1]">
+        <div className="hidden md:block absolute -top-96 -left-96 w-[1429px] h-[2137px] transform rotate-180 scale-y-[-1]">
           <Image
             src="/hero-group8.svg"
             alt=""
@@ -25,7 +25,7 @@ export default function HeroSection() {
             className="object-contain"
           />
         </div>
-        <div className="absolute -top-80 left-20 w-[800px] h-[600px]">
+        <div className="hidden md:block absolute -top-80 left-20 w-[800px] h-[600px]">
           <Image
             src="/hero-group.svg"
             alt=""

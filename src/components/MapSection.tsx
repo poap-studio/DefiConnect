@@ -16,7 +16,7 @@ export default function MapSection() {
     <section id="map" className="relative bg-defi-red">
       {/* Background Map Image */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-        <div className="w-full max-w-2xl h-80 relative">
+        <div className="w-full max-w-2xl md:max-w-5xl h-80 md:h-96 relative">
           <Image
             src="/background-map.png"
             alt="Venue Map"
@@ -28,7 +28,7 @@ export default function MapSection() {
 
       {/* Content Container */}
       <div className="relative z-10 px-5 py-12 md:px-8 md:py-16">
-        <div className="max-w-lg mx-auto md:max-w-none md:mx-5">
+        <div className="max-w-lg mx-auto md:max-w-6xl md:mx-auto">
           <div className="bg-white/20 backdrop-blur-md border border-white rounded-2xl p-5 md:p-7 relative overflow-hidden" style={{ 
             backgroundImage: "linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), linear-gradient(90deg, rgba(246, 109, 104, 0.3) 0%, rgba(246, 109, 104, 0.3) 100%)" 
           }}>
@@ -51,7 +51,7 @@ export default function MapSection() {
 
             {/* Interactive Map */}
             <div className="mb-6">
-              <div className="aspect-[2080/2800] w-full rounded-xl relative overflow-hidden">
+              <div className="aspect-[5/3] md:aspect-[3/2] w-full rounded-xl relative overflow-hidden">
                 {/* Map content based on active level */}
                 {activeLevel === 'level1' && (
                   <Image

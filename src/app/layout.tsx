@@ -37,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${rubik.variable} font-monospac antialiased`}>
+      <body className={`${rubik.variable} font-monospac antialiased overflow-x-hidden`}>
         {children}
       </body>
     </html>
