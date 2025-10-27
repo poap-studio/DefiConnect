@@ -77,6 +77,23 @@ export default function CollectionSection() {
     }
   }, [currentPage, isMobile])
 
+  useEffect(() => {
+    const slider = sliderRef.current
+    if (!slider || !isMobile) return
+
+    const handleScroll = () => {
+      const scrollLeft = slider.scrollLeft
+      const slideWidth = slider.offsetWidth
+      const newPage = Math.round(scrollLeft / slideWidth)
+      if (newPage !== currentPage && newPage >= 0 && newPage < totalPages) {
+        setCurrentPage(newPage)
+      }
+    }
+
+    slider.addEventListener('scroll', handleScroll)
+    return () => slider.removeEventListener('scroll', handleScroll)
+  }, [currentPage, isMobile, totalPages])
+
   const handleSlideChange = (pageIndex: number) => {
     setCurrentPage(pageIndex)
   }

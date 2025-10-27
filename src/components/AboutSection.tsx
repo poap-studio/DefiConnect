@@ -44,6 +44,23 @@ export default function AboutSection() {
     }
   }, [currentSlide])
 
+  useEffect(() => {
+    const slider = sliderRef.current
+    if (!slider) return
+
+    const handleScroll = () => {
+      const scrollLeft = slider.scrollLeft
+      const slideWidth = slider.offsetWidth
+      const newSlide = Math.round(scrollLeft / slideWidth)
+      if (newSlide !== currentSlide) {
+        setCurrentSlide(newSlide)
+      }
+    }
+
+    slider.addEventListener('scroll', handleScroll)
+    return () => slider.removeEventListener('scroll', handleScroll)
+  }, [currentSlide])
+
   const handleSlideChange = (index: number) => {
     setCurrentSlide(index)
   }
