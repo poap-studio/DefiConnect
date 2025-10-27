@@ -8,6 +8,7 @@ interface AboutCard {
   title: string
   description: string
   icon: string
+  image: string
 }
 
 const aboutCards: AboutCard[] = [
@@ -15,19 +16,22 @@ const aboutCards: AboutCard[] = [
     id: 1,
     title: "Find your path",
     description: "Move between spaces of innovation and community. Whether inside Konex or out in the city, each experience brings a new clue to your journey.",
-    icon: "🔍"
+    icon: "🔍",
+    image: "/find.png"
   },
   {
     id: 2,
     title: "Collect memories",
     description: "Each POAP is a digital memory, a proof of your presence at moments that matter. Build your collection as you explore the event.",
-    icon: "🎯"
+    icon: "🎯",
+    image: "/collect.png"
   },
   {
     id: 3,
     title: "Unlock rewards",
     description: "The more you explore, the more you unlock. Exclusive rewards await those who dive deep into the DeFiConnect experience.",
-    icon: "🔓"
+    icon: "🔓",
+    image: "/reveal.png"
   }
 ]
 
@@ -95,8 +99,8 @@ export default function AboutSection() {
                 {/* Circle graphic */}
                 <div className="w-64 h-48 mx-auto relative aspect-[250/184]">
                   <Image
-                    src="/circle-graphic.svg"
-                    alt=""
+                    src={card.image}
+                    alt={card.title}
                     fill
                     className="object-contain"
                   />
