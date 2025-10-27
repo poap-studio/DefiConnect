@@ -93,7 +93,7 @@ export default function AboutSection() {
             >
               <div className="mb-6">
                 {/* Circle graphic */}
-                <div className="w-48 h-48 mx-auto relative">
+                <div className="w-64 h-48 mx-auto relative aspect-[250/184]">
                   <Image
                     src="/circle-graphic.svg"
                     alt=""
@@ -129,7 +129,7 @@ export default function AboutSection() {
                 <div className="bg-white/20 border border-white rounded-2xl p-6 text-center">
                   <div className="mb-6">
                     {/* Circle graphic */}
-                    <div className="w-48 h-48 mx-auto relative">
+                    <div className="w-64 h-48 mx-auto relative aspect-[250/184]">
                       <Image
                         src="/circle-graphic.svg"
                         alt=""
