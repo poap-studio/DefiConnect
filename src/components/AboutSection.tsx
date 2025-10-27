@@ -100,9 +100,6 @@ export default function AboutSection() {
                     fill
                     className="object-contain"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-6xl">{card.icon}</span>
-                  </div>
                 </div>
               </div>
               <div className="text-white">
@@ -139,9 +136,6 @@ export default function AboutSection() {
                         fill
                         className="object-contain"
                       />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-6xl">{card.icon}</span>
-                      </div>
                     </div>
                   </div>
                   <div className="text-white">
