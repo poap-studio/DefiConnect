@@ -6,33 +6,15 @@ import { images } from '@/assets/images'
 export default function HeroSection() {
   return (
     <section className="relative bg-defi-red overflow-hidden">
-      {/* Background Graphics */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Vector graphics positioned to match Figma design */}
-        <div className="absolute -top-32 -right-40 md:-top-64 md:-right-80 w-[703px] md:w-[1406px] h-[548px] md:h-[1096px] transform rotate-[70.97deg] scale-y-[-1] skew-x-[7.15deg]">
-          <Image
-            src="/hero-vector.svg"
-            alt=""
-            fill
-            className="object-contain"
-          />
-        </div>
-        <div className="absolute -top-48 -left-48 md:-top-96 md:-left-96 w-[714px] md:w-[1429px] h-[1068px] md:h-[2137px] transform rotate-180 scale-y-[-1]">
-          <Image
-            src="/hero-group8.svg"
-            alt=""
-            fill
-            className="object-contain"
-          />
-        </div>
-        <div className="absolute -top-40 left-10 md:-top-80 md:left-20 w-[400px] md:w-[800px] h-[300px] md:h-[600px]">
-          <Image
-            src="/hero-group.svg"
-            alt=""
-            fill
-            className="object-contain"
-          />
-        </div>
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/background_hero.png"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+        />
       </div>
 
       {/* Content */}
