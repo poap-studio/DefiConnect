@@ -1,40 +1,191 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-import PoapCard from './PoapCard'
 
-// Challenge data from CSV
-const poapData = [
-  { id: 1, title: "Pick up and scan your DeFiConnect POAP card at entrance check-in.", date: "18 - 19 Nov", location: "Entrance", image: "https://assets.poap.xyz/021e395f-af4c-4c44-a506-b3d56e6c56ad.png" },
-  { id: 2, title: "Attend the Morpho Fireside Chat at the Vault Summit (Nov 18 only).", date: "18 Nov - 2:10PM - 2:35PM", location: "Stage Area", image: "https://assets.poap.xyz/fa4c5805-2926-443b-b218-4ae34aa9610a.png" },
-  { id: 3, title: "Attend Railgun Privacy & Compliance Panel (Nov 19 only).", date: "19 Nov - 3:10PM - 3:50PM", location: "Main Stage", image: "https://assets.poap.xyz/0b84a4f8-bfab-42bd-a381-6bedccf17490.png" },
-  { id: 4, title: "Find and say hi to the Curve rep and join their Telegram group.", date: "18 - 19 Nov", location: "Venue", image: "https://assets.poap.xyz/00108290-808b-43ed-9fea-6c676dcf3721.png" },
-  { id: 5, title: "Visit Katana's Booth - follow Katana on X to collect your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/3c519cb8-9339-4bb6-817d-71587859662a.png" },
-  { id: 6, title: "Stop by Symbiotic's Booth - follow on X and fill out a short form.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/3347408f-d3af-4312-8c62-35fdb351498b.png" },
-  { id: 7, title: "Attend Velora's Workshop and tap the poster in the area (Nov 19 only).", date: "19 Nov - 2:30PM - 3:30PM", location: "Co-working Zone", image: "https://assets.poap.xyz/573171ba-17e0-4709-af2f-175284262117.png" },
-  { id: 8, title: "Attend a Fenbushi Workshop and tap the poster (Nov 18 only).", date: "18 Nov - 11AM - 4PM", location: "Workshop Area", image: "https://assets.poap.xyz/26aa745a-1941-41d8-ad89-c93d7dce69cc.png" },
-  { id: 9, title: "Visit Aragon Container Space and tap the poster.", date: "18 - 19 Nov", location: "Container Space", image: "https://assets.poap.xyz/0627466c-3724-4360-8019-18446514b40a.png" },
-  { id: 10, title: "Tweet a picture at the Aleo Booth, tag @AleoH, and claim your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/866f8994-e131-4fae-bb3c-73d6ad1f74f6.png" },
-  { id: 11, title: "Visit Avantgarde - follow on X and fill out their short form.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/d3b4c9e3-b1c4-47aa-b8de-a44ad17c4d06.png" },
-  { id: 12, title: "Stop by Celo's Booth - follow Celo on X.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/ceceabef-8232-465a-9958-59c9c8a53487.png" },
-  { id: 13, title: "Follow Enzyme on X & LinkedIn to earn your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/0f71dfc2-1977-4175-b263-3fb4bb6e9ffc.png" },
-  { id: 14, title: "Visit Gauntlet's Booth - follow on X to claim your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/2ef78648-5d4a-4b3e-a313-9c1e6b6c385a.png" },
-  { id: 15, title: "Visit Hyve DA's Booth - follow them on X to unlock your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/266d2587-b919-4c58-8e42-59e9cb0dcb48.png" },
-  { id: 16, title: "Take a selfie with your Spark Card, tag @sparkdotfi, or follow on X.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/aeb2dbf5-91ba-4937-a1d5-240d6338468c.png" },
-  { id: 17, title: "Tap to mint your POAP at the Steakhouse Financial Booth.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/54f1e021-b899-4a6e-b488-e954f0abe867.png" },
-  { id: 18, title: "Take the Grip Challenge at Tellor Booth.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/d9fa9dd8-7930-4c30-8c26-2ab1681ebaf6.png" },
-  { id: 19, title: "Follow Twin Finance & Join Waitlist to claim the twin's products.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/83e4014f-34d6-4a58-a401-4d2d24962328.png" },
-  { id: 20, title: "Attend DeFiConnect X Space Live Session", date: "11 Nov - 4PM CET", location: "Online", image: "https://assets.poap.xyz/fe74072b-292f-4ed9-affc-5e006e371a2d.png" },
+interface Challenge {
+  id: number
+  title: string
+  date: string
+  difficulty: string
+  image: string
+  type: 'real' | 'coming-soon'
+}
+
+// Challenge data from CSV - all 20 real challenges
+const challengeData: Challenge[] = [
+  {
+    id: 1,
+    title: "Pick up and scan your DeFiConnect POAP card at entrance check-in.",
+    date: "18 - 19 Nov",
+    difficulty: "Entrance",
+    image: "https://assets.poap.xyz/021e395f-af4c-4c44-a506-b3d56e6c56ad.png",
+    type: 'real'
+  },
+  {
+    id: 2,
+    title: "Attend the Morpho Fireside Chat at the Vault Summit (Nov 18 only).",
+    date: "18 Nov - 2:10PM - 2:35PM",
+    difficulty: "Stage Area",
+    image: "https://assets.poap.xyz/fa4c5805-2926-443b-b218-4ae34aa9610a.png",
+    type: 'real'
+  },
+  {
+    id: 3,
+    title: "Attend Railgun Privacy & Compliance Panel (Nov 19 only).",
+    date: "19 Nov - 3:10PM - 3:50PM",
+    difficulty: "Main Stage",
+    image: "https://assets.poap.xyz/0b84a4f8-bfab-42bd-a381-6bedccf17490.png",
+    type: 'real'
+  },
+  {
+    id: 4,
+    title: "Find and say hi to the Curve rep and join their Telegram group.",
+    date: "18 - 19 Nov",
+    difficulty: "Venue",
+    image: "https://assets.poap.xyz/00108290-808b-43ed-9fea-6c676dcf3721.png",
+    type: 'real'
+  },
+  {
+    id: 5,
+    title: "Visit Katana's Booth - follow Katana on X to collect your POAP.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/3c519cb8-9339-4bb6-817d-71587859662a.png",
+    type: 'real'
+  },
+  {
+    id: 6,
+    title: "Stop by Symbiotic's Booth - follow on X and fill out a short form.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/3347408f-d3af-4312-8c62-35fdb351498b.png",
+    type: 'real'
+  },
+  {
+    id: 7,
+    title: "Attend Velora's Workshop and tap the poster in the area (Nov 19 only).",
+    date: "19 Nov - 2:30PM - 3:30PM",
+    difficulty: "Co-working Zone",
+    image: "https://assets.poap.xyz/573171ba-17e0-4709-af2f-175284262117.png",
+    type: 'real'
+  },
+  {
+    id: 8,
+    title: "Attend a Fenbushi Workshop and tap the poster (Nov 18 only).",
+    date: "18 Nov - 11AM - 4PM",
+    difficulty: "Workshop Area",
+    image: "https://assets.poap.xyz/26aa745a-1941-41d8-ad89-c93d7dce69cc.png",
+    type: 'real'
+  },
+  {
+    id: 9,
+    title: "Visit Aragon Container Space and tap the poster.",
+    date: "18 - 19 Nov",
+    difficulty: "Container Space",
+    image: "https://assets.poap.xyz/0627466c-3724-4360-8019-18446514b40a.png",
+    type: 'real'
+  },
+  {
+    id: 10,
+    title: "Tweet a picture at the Aleo Booth, tag @AleoH, and claim your POAP.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/866f8994-e131-4fae-bb3c-73d6ad1f74f6.png",
+    type: 'real'
+  },
+  {
+    id: 11,
+    title: "Visit Avantgarde - follow on X and fill out their short form.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/d3b4c9e3-b1c4-47aa-b8de-a44ad17c4d06.png",
+    type: 'real'
+  },
+  {
+    id: 12,
+    title: "Stop by Celo's Booth - follow Celo on X.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/ceceabef-8232-465a-9958-59c9c8a53487.png",
+    type: 'real'
+  },
+  {
+    id: 13,
+    title: "Follow Enzyme on X & LinkedIn to earn your POAP.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/0f71dfc2-1977-4175-b263-3fb4bb6e9ffc.png",
+    type: 'real'
+  },
+  {
+    id: 14,
+    title: "Visit Gauntlet's Booth - follow on X to claim your POAP.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/2ef78648-5d4a-4b3e-a313-9c1e6b6c385a.png",
+    type: 'real'
+  },
+  {
+    id: 15,
+    title: "Visit Hyve DA's Booth - follow them on X to unlock your POAP.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/266d2587-b919-4c58-8e42-59e9cb0dcb48.png",
+    type: 'real'
+  },
+  {
+    id: 16,
+    title: "Take a selfie with your Spark Card, tag @sparkdotfi, or follow on X.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/aeb2dbf5-91ba-4937-a1d5-240d6338468c.png",
+    type: 'real'
+  },
+  {
+    id: 17,
+    title: "Tap to mint your POAP at the Steakhouse Financial Booth.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/54f1e021-b899-4a6e-b488-e954f0abe867.png",
+    type: 'real'
+  },
+  {
+    id: 18,
+    title: "Take the Grip Challenge at Tellor Booth.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/d9fa9dd8-7930-4c30-8c26-2ab1681ebaf6.png",
+    type: 'real'
+  },
+  {
+    id: 19,
+    title: "Follow Twin Finance & Join Waitlist to claim the twin's products.",
+    date: "18 - 19 Nov",
+    difficulty: "Booth",
+    image: "https://assets.poap.xyz/83e4014f-34d6-4a58-a401-4d2d24962328.png",
+    type: 'real'
+  },
+  {
+    id: 20,
+    title: "Attend DeFiConnect X Space Live Session",
+    date: "11 Nov - 4PM CET",
+    difficulty: "Online",
+    image: "https://assets.poap.xyz/fe74072b-292f-4ed9-affc-5e006e371a2d.png",
+    type: 'real'
+  }
 ]
 
-const ITEMS_PER_PAGE_MOBILE = 4
-const ITEMS_PER_PAGE_DESKTOP = 10
-
 export default function CollectionSection() {
-  const [currentPage, setCurrentPage] = useState(0)
   const [searchTerm, setSearchTerm] = useState('')
-  const sliderRef = useRef<HTMLDivElement>(null)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+  
+  const totalSlides = Math.ceil(challengeData.length / 9) // Desktop: 3 slides for 20 cards (9+9+2)
+  const cardsPerSlide = 9
+  const mobileCardsPerSlide = 4
+  const mobileTotalSlides = Math.ceil(challengeData.length / mobileCardsPerSlide) // Mobile: 5 slides for 20 cards
 
   const handleSearch = () => {
     const trimmedTerm = searchTerm.trim()
@@ -59,145 +210,150 @@ export default function CollectionSection() {
     }
   }
 
-  // Calculate pagination for mobile (5 pages) and desktop (2 pages)
-  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false
-  const itemsPerPage = isMobile ? ITEMS_PER_PAGE_MOBILE : ITEMS_PER_PAGE_DESKTOP
-  const totalPages = Math.ceil(poapData.length / itemsPerPage)
-  
-  const startIndex = currentPage * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const currentPoaps = poapData.slice(startIndex, endIndex)
-
-  useEffect(() => {
-    if (sliderRef.current && isMobile) {
-      sliderRef.current.scrollTo({
-        left: currentPage * sliderRef.current.offsetWidth,
-        behavior: 'smooth'
-      })
-    }
-  }, [currentPage, isMobile])
-
-  useEffect(() => {
-    const slider = sliderRef.current
-    if (!slider || !isMobile) return
-
-    const handleScroll = () => {
-      const scrollLeft = slider.scrollLeft
-      const slideWidth = slider.offsetWidth
-      const newPage = Math.round(scrollLeft / slideWidth)
-      if (newPage !== currentPage && newPage >= 0 && newPage < totalPages) {
-        setCurrentPage(newPage)
-      }
-    }
-
-    slider.addEventListener('scroll', handleScroll)
-    return () => slider.removeEventListener('scroll', handleScroll)
-  }, [currentPage, isMobile, totalPages])
-
-  const handleSlideChange = (pageIndex: number) => {
-    setCurrentPage(pageIndex)
+  const handleViewCollection = () => {
+    // Open POAP collection page in new tab
+    window.open('https://collections.poap.xyz/collections/deficonnect-poap-treasure-hunt/24214', '_blank')
   }
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)
+  }
+
+  const goToSlide = (slideIndex: number) => {
+    setCurrentSlide(slideIndex)
+  }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0) // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe && currentSlide < mobileTotalSlides - 1) {
+      setCurrentSlide(currentSlide + 1)
+    }
+    if (isRightSwipe && currentSlide > 0) {
+      setCurrentSlide(currentSlide - 1)
+    }
+  }
+
+  // Get current slide's challenges for mobile
+  const currentMobileChallenges = challengeData.slice(
+    currentSlide * mobileCardsPerSlide, 
+    (currentSlide + 1) * mobileCardsPerSlide
+  )
+
   return (
-    <section id="collection" className="relative bg-defi-red px-5 py-12 md:px-8 md:py-16">
-      {/* Background Image - Positioned lower to not interfere with title */}
-      <div className="absolute inset-0 top-48 flex justify-center items-center overflow-visible">
+    <section id="challenges" className="relative bg-defi-red min-h-[1230px] md:min-h-[1200px]">
+      {/* Background Image */}
+      <div className="absolute h-[853px] left-1/2 top-[247px] -translate-x-1/2 w-[1285px]">
         <Image
-          src="/collection-bg.png"
+          src="/background-website.png"
           alt=""
-          width={0}
-          height={0}
-          sizes="(max-width: 768px) 100vh, 50vw"
-          className="h-full w-auto object-contain md:max-w-[100vw] min-h-full"
+          fill
+          className="object-cover"
         />
       </div>
       
-      <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-white font-monospac font-semibold text-display-sm md:text-display-md mb-3">
-            The Collection
-          </h2>
-          <p className="text-white/90 font-monospac text-md md:text-lg">
-            Discover and collect all POAPs throughout the event
-          </p>
-        </div>
+      {/* Desktop Header */}
+      <div className="hidden md:block absolute flex flex-col gap-4 items-center left-1/2 -translate-x-1/2 text-center text-white top-[65px] w-[1272px]">
+        <p className="font-monospac font-bold leading-[72px] text-[60px] tracking-[-1.2px] whitespace-nowrap">
+          The Challenges
+        </p>
+        <p className="font-monospac font-normal leading-[32px] text-[24px]">
+          <span className="font-monospac font-bold">20 POAPs </span>
+          waiting to be discovered.
+        </p>
+      </div>
 
-        {/* Search Section - Updated to match POAP card blur */}
-        <div className="bg-white/20 backdrop-blur-md border border-white rounded-2xl p-4 md:p-6 mb-8 relative overflow-hidden" style={{ backgroundImage: "linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), linear-gradient(90deg, rgba(246, 109, 104, 0.3) 0%, rgba(246, 109, 104, 0.3) 100%)" }}>
-          {/* Glossy overlay */}
-          <div className="absolute inset-0 rounded-2xl" style={{
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.02) 70%, rgba(255, 255, 255, 0.08) 100%)',
-            pointerEvents: 'none'
-          }}></div>
-          <div className="relative z-10">
-          <h3 className="text-white font-monospac font-semibold text-xl text-center mb-4">
-            Check your progress
-          </h3>
-          <div className="flex gap-2">
-            <div className="flex-1 bg-defi-red/40 border border-white rounded-full px-4 py-2">
-              <input
-                type="text"
-                placeholder="ENS, address or email"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="w-full bg-transparent text-white placeholder-white/70 outline-none font-monospac"
-              />
-            </div>
-            <button
-              onClick={handleSearch}
-              className="bg-white rounded-full hover:bg-gray-100 transition-colors flex items-center justify-center w-10 h-10"
-              aria-label="Search"
-            >
-              <div className="w-[18px] h-[18px] flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="#E96652" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </button>
-          </div>
-          </div>
+      {/* Desktop Notice - positioned between header and cards */}
+      <div className="hidden md:flex absolute bg-white gap-4 items-center justify-center pl-3 pr-4 py-3 rounded-lg left-1/2 -translate-x-1/2 top-[217px] w-[1272px]">
+        <div className="relative w-8 h-8 flex-shrink-0">
+          <Image
+            src="/assets/calendar-icon.svg"
+            alt=""
+            fill
+            className="object-contain"
+          />
         </div>
+        <p className="font-monospac font-normal leading-[32px] text-[#e96652] text-[24px]">
+          <span className="font-monospac font-bold">POAPs aren't collected automatically.</span>
+          <span> Scan QRs or tap at sponsor booths to claim them. New ones appear on Day 2, so stay on the hunt.</span>
+        </p>
+      </div>
 
-        {/* POAP Grid - Desktop */}
-        <div className="hidden md:grid md:grid-cols-5 gap-4 mb-8">
-          {currentPoaps.map((poap) => (
-            <PoapCard
-              key={poap.id}
-              title={poap.title}
-              date={poap.date}
-              location={poap.location}
-              image={poap.image}
-              className="h-72"
-            />
-          ))}
+      {/* Mobile Header */}
+      <div className="md:hidden absolute flex flex-col gap-4 items-center left-1/2 -translate-x-1/2 text-center text-white top-8 px-5 w-full">
+        <p className="font-monospac font-bold leading-[38px] text-[30px] whitespace-nowrap">
+          The Challenges
+        </p>
+        <p className="font-monospac font-normal leading-[1.3] text-[16px]">
+          <span className="font-monospac font-bold">20 POAPs </span>
+          <span>waiting to be discovered.</span>
+        </p>
+      </div>
+
+      {/* Mobile Notice - positioned between header and cards */}
+      <div className="md:hidden absolute bg-white flex gap-4 items-center p-4 rounded-lg left-1/2 -translate-x-1/2 top-[131px] w-[335px]">
+        <div className="relative w-8 h-8 rounded-full flex-shrink-0">
+          <Image
+            src="/assets/calendar-icon.svg"
+            alt=""
+            fill
+            className="object-contain"
+          />
         </div>
+        <p className="font-monospac font-normal leading-[1.3] text-[#e96652] text-[14px]">
+          <span className="font-monospac font-bold">POAPs aren't collected automatically.</span>
+          <span> Scan QRs or tap at sponsor booths to claim them. New ones appear on Day 2, so stay on the hunt.</span>
+        </p>
+      </div>
 
-        {/* POAP Slider - Mobile */}
-        <div className="md:hidden mb-8">
-          <div
-            ref={sliderRef}
-            className="flex overflow-x-auto scroll-smooth no-scrollbar snap-x snap-mandatory"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      {/* Desktop Challenges Grid */}
+      <div className="hidden md:flex absolute flex-col gap-8 items-center left-1/2 -translate-x-1/2 top-[345px] w-[1272px]">
+        <div className="overflow-hidden w-full">
+          <div 
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
-            {Array.from({ length: totalPages }, (_, pageIndex) => {
-              const pageStart = pageIndex * ITEMS_PER_PAGE_MOBILE
-              const pageEnd = pageStart + ITEMS_PER_PAGE_MOBILE
-              const pagePoaps = poapData.slice(pageStart, pageEnd)
-              
+            {Array.from({ length: totalSlides }).map((_, slideIndex) => {
+              const slideChallenges = challengeData.slice(
+                slideIndex * cardsPerSlide, 
+                (slideIndex + 1) * cardsPerSlide
+              )
               return (
-                <div key={pageIndex} className="flex-none w-full snap-center px-2">
-                  <div className="grid grid-cols-2 gap-3">
-                    {pagePoaps.map((poap) => (
-                      <PoapCard
-                        key={poap.id}
-                        title={poap.title}
-                        date={poap.date}
-                        location={poap.location}
-                        image={poap.image}
-                        className="h-64"
-                      />
+                <div key={slideIndex} className="flex flex-col gap-4 items-start w-full flex-shrink-0">
+                  {/* First Row */}
+                  <div className="flex gap-4 h-[147px] items-center w-full">
+                    {slideChallenges.slice(0, 3).map((challenge) => (
+                      <ChallengeCard key={challenge.id} challenge={challenge} />
+                    ))}
+                  </div>
+                  
+                  {/* Second Row */}
+                  <div className="flex gap-4 h-[147px] items-center w-full">
+                    {slideChallenges.slice(3, 6).map((challenge) => (
+                      <ChallengeCard key={challenge.id} challenge={challenge} />
+                    ))}
+                  </div>
+                  
+                  {/* Third Row */}
+                  <div className="flex gap-4 h-[147px] items-center w-full">
+                    {slideChallenges.slice(6, 9).map((challenge) => (
+                      <ChallengeCard key={challenge.id} challenge={challenge} />
                     ))}
                   </div>
                 </div>
@@ -206,34 +362,302 @@ export default function CollectionSection() {
           </div>
         </div>
 
-        {/* Desktop Pagination Dots - Interactive */}
-        <div className="hidden md:flex justify-center gap-2">
-          {Array.from({ length: Math.ceil(poapData.length / ITEMS_PER_PAGE_DESKTOP) }, (_, index) => (
+        {/* Pagination Dots */}
+        <div className="flex gap-5 items-center justify-center w-[52px]">
+          {Array.from({ length: totalSlides }).map((_, index) => (
             <button
               key={index}
-              onClick={() => handleSlideChange(index)}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                currentPage === index ? 'bg-white' : 'bg-white/50'
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full transition-opacity duration-200 flex-shrink-0 ${
+                index === currentSlide ? 'bg-white opacity-100' : 'bg-white opacity-50'
               }`}
-              aria-label={`Go to page ${index + 1}`}
             />
           ))}
         </div>
 
-        {/* Mobile Pagination Dots - Interactive */}
-        <div className="md:hidden flex justify-center gap-2">
-          {Array.from({ length: totalPages }, (_, index) => (
+        {/* Desktop View Collection Button */}
+        <button
+          onClick={handleViewCollection}
+          className="bg-white flex gap-[10px] items-center justify-center px-6 py-2 rounded-[28px] hover:bg-gray-100 transition-colors"
+        >
+          <p className="font-monospac font-semibold leading-[28px] text-[#e96652] text-[18px] whitespace-nowrap">
+            View Collection
+          </p>
+        </button>
+
+        {/* Desktop Search Section */}
+        <div className="backdrop-blur-[25px] bg-[rgba(255,255,255,0.1)] border border-white flex flex-col gap-6 items-center pb-7 pt-4 px-5 rounded-2xl w-[620px]">
+          <p className="font-monospac font-semibold leading-[38px] text-[30px] text-center text-white">
+            Check your progress
+          </p>
+          <div className="flex gap-3 items-center">
+            <div className="bg-[rgba(233,102,82,0.4)] border border-white flex gap-[10px] items-center px-6 py-2 rounded-[22px]">
+              <input
+                type="text"
+                placeholder="Enter your ENS, Wallet or Email"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                className="bg-transparent font-monospac leading-[28px] text-[18px] text-white placeholder-white outline-none w-[280px]"
+              />
+            </div>
             <button
-              key={index}
-              onClick={() => handleSlideChange(index)}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                currentPage === index ? 'bg-white' : 'bg-white/50'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+              onClick={handleSearch}
+              className="bg-white flex gap-[10px] items-center justify-center px-6 py-2 rounded-[28px] hover:bg-gray-100 transition-colors"
+            >
+              <p className="font-monospac font-semibold leading-[28px] text-[#e96652] text-[18px] whitespace-nowrap">
+                View my POAPs
+              </p>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Challenges Grid */}
+      <div className="md:hidden absolute flex flex-col gap-6 items-center left-0 top-[285px] px-5 w-full">
+        <div className="flex flex-col gap-4 items-center w-full">
+          <div className="overflow-hidden w-full">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              {Array.from({ length: mobileTotalSlides }).map((_, slideIndex) => {
+                const slideChallenges = challengeData.slice(
+                  slideIndex * mobileCardsPerSlide, 
+                  (slideIndex + 1) * mobileCardsPerSlide
+                )
+                return (
+                  <div key={slideIndex} className="flex flex-col gap-4 w-full flex-shrink-0">
+                    {slideChallenges.map((challenge) => (
+                      <MobileChallengeCard key={challenge.id} challenge={challenge} />
+                    ))}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Mobile Pagination Dots */}
+          <div className="flex gap-1 items-center h-3">
+            {Array.from({ length: mobileTotalSlides }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`w-2 h-2 rounded-full transition-opacity duration-200 flex-shrink-0 ${
+                  index === currentSlide ? 'bg-white opacity-100' : 'bg-white opacity-50'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile View Collection Button */}
+        <button
+          onClick={handleViewCollection}
+          className="bg-white flex gap-[10px] items-center justify-center px-6 py-2 rounded-[28px] hover:bg-gray-100 transition-colors"
+        >
+          <p className="font-monospac font-semibold leading-[1.3] text-[#e96652] text-[16px] whitespace-nowrap">
+            View Collection
+          </p>
+        </button>
+
+        {/* Mobile Search Section */}
+        <div className="backdrop-blur-[25px] bg-[rgba(255,255,255,0.1)] border border-white flex flex-col gap-4 items-center pb-5 pt-3 px-4 rounded-2xl w-full">
+          <p className="font-monospac font-semibold leading-[1.3] text-[20px] text-center text-white">
+            Check your progress
+          </p>
+          <div className="flex gap-2 items-center w-full">
+            <div className="bg-[rgba(233,102,82,0.4)] border border-white flex gap-[10px] items-center px-4 py-2 rounded-[22px] flex-1">
+              <input
+                type="text"
+                placeholder="ENS, address or email"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                className="bg-transparent font-monospac leading-[1.3] text-[16px] text-white placeholder-white outline-none w-full"
+              />
+            </div>
+            <button
+              onClick={handleSearch}
+              className="bg-white flex gap-[10px] items-center justify-center px-3 py-2 rounded-[28px] hover:bg-gray-100 transition-colors"
+            >
+              <div className="relative w-[18px] h-[18px]">
+                <Image
+                  src="/search.png"
+                  alt=""
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function ChallengeCard({ challenge }: { challenge: Challenge }) {
+  if (challenge.type === 'coming-soon') {
+    return (
+      <div 
+        className="backdrop-blur-[25px] border border-white flex h-full items-center min-h-0 min-w-0 relative rounded-lg overflow-hidden flex-shrink-0"
+        style={{ 
+          backgroundImage: "linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), linear-gradient(90deg, rgba(246, 109, 104, 0.6) 0%, rgba(246, 109, 104, 0.6) 100%)",
+          width: 'calc(33.333% - 10.67px)' // 1/3 width minus gap adjustment
+        }}
+      >
+        <Image
+          src={challenge.image}
+          alt="Coming Soon"
+          fill
+          className="object-cover"
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div 
+      className="backdrop-blur-[25px] border border-white flex h-full items-center min-h-0 min-w-0 p-1 relative rounded-lg flex-shrink-0"
+      style={{ 
+        backgroundImage: "linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), linear-gradient(90deg, rgba(246, 109, 104, 0.6) 0%, rgba(246, 109, 104, 0.6) 100%)",
+        width: 'calc(33.333% - 10.67px)' // 1/3 width minus gap adjustment
+      }}
+    >
+      <div className="basis-0 flex flex-col grow h-full items-start justify-between min-h-0 min-w-0 px-3 py-2 relative rounded-lg">
+        <div className="flex flex-col gap-3 items-start w-full">
+          <div className="flex gap-2 items-center w-full">
+            <div className="basis-0 flex gap-1 grow items-center min-h-0 min-w-0">
+              <div className="relative w-4 h-4">
+                <Image
+                  src="/challenge-icon.svg"
+                  alt=""
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p className="font-monospac font-normal leading-[1.3] text-[14px] text-center text-white whitespace-nowrap">
+                CHALLENGE:
+              </p>
+            </div>
+            <div className="bg-white/20 flex gap-1 items-center px-1 py-0 rounded">
+              <p className="font-monospac font-bold leading-[18px] text-[12px] text-center text-white whitespace-nowrap">
+                {challenge.difficulty}
+              </p>
+            </div>
+          </div>
+          <p className="font-monospac font-bold leading-[1.3] text-[16px] text-white w-full">
+            {challenge.title}
+          </p>
+        </div>
+        <div className="flex gap-1 items-center w-full">
+          <div className="h-4 relative w-[14px]">
+            <Image
+              src="/date-icon.svg"
+              alt=""
+              fill
+              className="object-contain"
+            />
+          </div>
+          <p className="basis-0 font-monospac font-normal grow leading-[1.3] min-h-0 min-w-0 text-[14px] text-white">
+            {challenge.date}
+          </p>
+        </div>
+      </div>
+      <div className="bg-[rgba(255,124,119,0.8)] flex flex-col gap-2 h-full items-center justify-center pb-[6px] pt-2 px-[6px] relative rounded-[6px] w-[120px]">
+        <div className="relative w-20 h-20">
+          <Image
+            src={challenge.image}
+            alt={challenge.title}
+            fill
+            className="object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function MobileChallengeCard({ challenge }: { challenge: Challenge }) {
+  if (challenge.type === 'coming-soon') {
+    return (
+      <div 
+        className="backdrop-blur-[25px] border border-white flex h-[158px] items-center relative rounded-lg w-full overflow-hidden"
+        style={{ 
+          backgroundImage: "linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), linear-gradient(90deg, rgba(246, 109, 104, 0.6) 0%, rgba(246, 109, 104, 0.6) 100%)" 
+        }}
+      >
+        <Image
+          src="/coming_soon_mobile_new.png"
+          alt="Coming Soon"
+          fill
+          className="object-cover"
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div 
+      className="backdrop-blur-[25px] border border-white flex h-[158px] items-center p-1 relative rounded-lg w-full"
+      style={{ 
+        backgroundImage: "linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), linear-gradient(90deg, rgba(246, 109, 104, 0.6) 0%, rgba(246, 109, 104, 0.6) 100%)" 
+      }}
+    >
+      <div className="flex flex-col h-full items-start justify-between px-3 py-2 flex-1">
+        <div className="flex flex-col gap-3 items-start w-full">
+          <div className="flex gap-1 items-center w-full">
+            <div className="flex gap-1 items-center flex-1">
+              <div className="relative w-3 h-3">
+                <Image
+                  src="/challenge-icon.svg"
+                  alt=""
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p className="font-monospac font-normal leading-[18px] text-[12px] text-center text-white whitespace-nowrap">
+                CHALLENGE:
+              </p>
+            </div>
+            <div className="bg-white/20 flex gap-1 items-center px-1 py-0 rounded">
+              <p className="font-monospac font-bold leading-[18px] text-[12px] text-center text-white whitespace-nowrap">
+                {challenge.difficulty}
+              </p>
+            </div>
+          </div>
+          <p className="font-monospac font-bold leading-[1.3] text-[14px] text-white w-full">
+            {challenge.title}
+          </p>
+        </div>
+        <div className="flex gap-1 items-center w-full">
+          <div className="h-[14px] relative w-[12px]">
+            <Image
+              src="/date-icon.svg"
+              alt=""
+              fill
+              className="object-contain"
+            />
+          </div>
+          <p className="font-monospac font-normal leading-[18px] text-[12px] text-white flex-1">
+            {challenge.date}
+          </p>
+        </div>
+      </div>
+      <div className="bg-[rgba(255,124,119,0.8)] flex flex-col gap-2 h-full items-center justify-center p-1 rounded-[6px] w-[120px]">
+        <div className="relative w-20 h-20">
+          <Image
+            src={challenge.image}
+            alt={challenge.title}
+            fill
+            className="object-cover"
+          />
+        </div>
+      </div>
+    </div>
   )
 }
