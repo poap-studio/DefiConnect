@@ -8,6 +8,11 @@ const nextConfig = {
         port: '3845',
         pathname: '/assets/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.poap.xyz',
+        pathname: '/**',
+      },
     ],
   },
 }

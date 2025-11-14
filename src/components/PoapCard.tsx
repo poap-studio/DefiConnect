@@ -7,10 +7,11 @@ interface PoapCardProps {
   title: string
   date: string
   location: string
+  image?: string
   className?: string
 }
 
-export default function PoapCard({ title, date, location, className = '' }: PoapCardProps) {
+export default function PoapCard({ title, date, location, image, className = '' }: PoapCardProps) {
   return (
     <div className={`border border-white box-border flex flex-col gap-4 items-center px-3 py-4 rounded-2xl bg-white/20 backdrop-blur-md relative overflow-hidden ${className}`} style={{ backgroundImage: "linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), linear-gradient(90deg, rgba(246, 109, 104, 0.3) 0%, rgba(246, 109, 104, 0.3) 100%)" }}>
       {/* Glossy overlay */}
@@ -23,7 +24,7 @@ export default function PoapCard({ title, date, location, className = '' }: Poap
         {/* POAP Image - Exact Figma specs: 100px */}
         <div className="relative shrink-0 size-[100px]">
           <Image
-            src="/general-attendance.png"
+            src={image || "/general-attendance.png"}
             alt={title}
             fill
             className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full"

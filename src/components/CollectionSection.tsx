@@ -4,28 +4,28 @@ import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import PoapCard from './PoapCard'
 
-// Mock POAP data
+// Challenge data from CSV
 const poapData = [
-  { id: 1, title: "Opening Ceremony", date: "18 Nov, 9-10 am", location: "CC Konex, BA" },
-  { id: 2, title: "Keynote Speech", date: "18 Nov, 10-11 am", location: "CC Konex, BA" },
-  { id: 3, title: "DeFi Workshop", date: "18 Nov, 2-3 pm", location: "CC Konex, BA" },
-  { id: 4, title: "Networking Break", date: "18 Nov, 4-5 pm", location: "CC Konex, BA" },
-  { id: 5, title: "Panel Discussion", date: "18 Nov, 5-6 pm", location: "CC Konex, BA" },
-  { id: 6, title: "Happy Hour", date: "18 Nov, 6-7 pm", location: "Address 124, BA" },
-  { id: 7, title: "Day 2 Opening", date: "19 Nov, 9-10 am", location: "CC Konex, BA" },
-  { id: 8, title: "Developer Track", date: "19 Nov, 10-12 pm", location: "CC Konex, BA" },
-  { id: 9, title: "Side Event", date: "19 Nov, 1-2 pm", location: "Address 124, BA" },
-  { id: 10, title: "Closing Ceremony", date: "19 Nov, 4-5 pm", location: "CC Konex, BA" },
-  { id: 11, title: "After Party", date: "19 Nov, 8-10 pm", location: "Address 124, BA" },
-  { id: 12, title: "Sponsor Booth A", date: "18-19 Nov", location: "CC Konex, BA" },
-  { id: 13, title: "Sponsor Booth B", date: "18-19 Nov", location: "CC Konex, BA" },
-  { id: 14, title: "Sponsor Booth C", date: "18-19 Nov", location: "CC Konex, BA" },
-  { id: 15, title: "Special Event", date: "18-19 Nov", location: "CC Konex, BA" },
-  { id: 16, title: "Workshop A", date: "18 Nov, 3-4 pm", location: "CC Konex, BA" },
-  { id: 17, title: "Workshop B", date: "19 Nov, 11-12 pm", location: "CC Konex, BA" },
-  { id: 18, title: "Workshop C", date: "19 Nov, 2-3 pm", location: "CC Konex, BA" },
-  { id: 19, title: "Secret Event", date: "18-19 Nov", location: "Hidden Location" },
-  { id: 20, title: "Final Surprise", date: "19 Nov, 10 pm", location: "CC Konex, BA" },
+  { id: 1, title: "Pick up and scan your DeFiConnect POAP card at entrance check-in.", date: "18 - 19 Nov", location: "Entrance", image: "https://assets.poap.xyz/021e395f-af4c-4c44-a506-b3d56e6c56ad.png" },
+  { id: 2, title: "Attend the Morpho Fireside Chat at the Vault Summit (Nov 18 only).", date: "18 Nov - 2:10PM - 2:35PM", location: "Stage Area", image: "https://assets.poap.xyz/fa4c5805-2926-443b-b218-4ae34aa9610a.png" },
+  { id: 3, title: "Attend Railgun Privacy & Compliance Panel (Nov 19 only).", date: "19 Nov - 3:10PM - 3:50PM", location: "Main Stage", image: "https://assets.poap.xyz/0b84a4f8-bfab-42bd-a381-6bedccf17490.png" },
+  { id: 4, title: "Find and say hi to the Curve rep and join their Telegram group.", date: "18 - 19 Nov", location: "Venue", image: "https://assets.poap.xyz/00108290-808b-43ed-9fea-6c676dcf3721.png" },
+  { id: 5, title: "Visit Katana's Booth - follow Katana on X to collect your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/3c519cb8-9339-4bb6-817d-71587859662a.png" },
+  { id: 6, title: "Stop by Symbiotic's Booth - follow on X and fill out a short form.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/3347408f-d3af-4312-8c62-35fdb351498b.png" },
+  { id: 7, title: "Attend Velora's Workshop and tap the poster in the area (Nov 19 only).", date: "19 Nov - 2:30PM - 3:30PM", location: "Co-working Zone", image: "https://assets.poap.xyz/573171ba-17e0-4709-af2f-175284262117.png" },
+  { id: 8, title: "Attend a Fenbushi Workshop and tap the poster (Nov 18 only).", date: "18 Nov - 11AM - 4PM", location: "Workshop Area", image: "https://assets.poap.xyz/26aa745a-1941-41d8-ad89-c93d7dce69cc.png" },
+  { id: 9, title: "Visit Aragon Container Space and tap the poster.", date: "18 - 19 Nov", location: "Container Space", image: "https://assets.poap.xyz/0627466c-3724-4360-8019-18446514b40a.png" },
+  { id: 10, title: "Tweet a picture at the Aleo Booth, tag @AleoH, and claim your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/866f8994-e131-4fae-bb3c-73d6ad1f74f6.png" },
+  { id: 11, title: "Visit Avantgarde - follow on X and fill out their short form.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/d3b4c9e3-b1c4-47aa-b8de-a44ad17c4d06.png" },
+  { id: 12, title: "Stop by Celo's Booth - follow Celo on X.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/ceceabef-8232-465a-9958-59c9c8a53487.png" },
+  { id: 13, title: "Follow Enzyme on X & LinkedIn to earn your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/0f71dfc2-1977-4175-b263-3fb4bb6e9ffc.png" },
+  { id: 14, title: "Visit Gauntlet's Booth - follow on X to claim your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/2ef78648-5d4a-4b3e-a313-9c1e6b6c385a.png" },
+  { id: 15, title: "Visit Hyve DA's Booth - follow them on X to unlock your POAP.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/266d2587-b919-4c58-8e42-59e9cb0dcb48.png" },
+  { id: 16, title: "Take a selfie with your Spark Card, tag @sparkdotfi, or follow on X.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/aeb2dbf5-91ba-4937-a1d5-240d6338468c.png" },
+  { id: 17, title: "Tap to mint your POAP at the Steakhouse Financial Booth.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/54f1e021-b899-4a6e-b488-e954f0abe867.png" },
+  { id: 18, title: "Take the Grip Challenge at Tellor Booth.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/d9fa9dd8-7930-4c30-8c26-2ab1681ebaf6.png" },
+  { id: 19, title: "Follow Twin Finance & Join Waitlist to claim the twin's products.", date: "18 - 19 Nov", location: "Booth", image: "https://assets.poap.xyz/83e4014f-34d6-4a58-a401-4d2d24962328.png" },
+  { id: 20, title: "Attend DeFiConnect X Space Live Session", date: "11 Nov - 4PM CET", location: "Online", image: "https://assets.poap.xyz/fe74072b-292f-4ed9-affc-5e006e371a2d.png" },
 ]
 
 const ITEMS_PER_PAGE_MOBILE = 4
@@ -168,6 +168,7 @@ export default function CollectionSection() {
               title={poap.title}
               date={poap.date}
               location={poap.location}
+              image={poap.image}
               className="h-72"
             />
           ))}
@@ -194,6 +195,7 @@ export default function CollectionSection() {
                         title={poap.title}
                         date={poap.date}
                         location={poap.location}
+                        image={poap.image}
                         className="h-64"
                       />
                     ))}
