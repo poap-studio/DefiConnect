@@ -117,59 +117,61 @@ interface Reward {
   requiredPoaps: number
   image: string
   images?: string[]
-  totalSupply: number
-  rewardType: 'raffle' | 'first-come'
+  totalSupply: string
+  rewardType: 'raffle' | 'first-come' | 'fcfs-raffle'
 }
 
 const rewardsData: Reward[] = [
   {
     id: 1,
     tier: "TIER 3",
-    title: "Stay Tuned!",
-    description: "Reserved for the most dedicated collectors. Join the raffle below, the more POAPs you collect, the better your chances.",
-    requiredPoaps: 20,
-    image: "/reward-tier-3.png",
-    totalSupply: 20,
-    rewardType: 'raffle'
+    title: "Rare Gem",
+    description: "Reserved for the most dedicated collectors. Be one of the first 90 at the merch booth with 15+ POAPs. Or, join the raffle below to win 1 of the final 10 items.",
+    requiredPoaps: 15,
+    image: "/New Tier 3.png",
+    totalSupply: "100",
+    rewardType: 'fcfs-raffle'
   },
   {
     id: 2,
     tier: "TIER 2",
-    title: "Stay Tuned!",
-    description: "Your midway reward into the Hunt. Collect 10 POAPs to reach this tier and unlock what lies beyond.",
+    title: "Premium Merch",
+    description: "Your middway reward into the Hunt. Collect 10 POAPs to reach this tier and unlock what lies beyond.",
     requiredPoaps: 10,
-    images: ["/reward-tier-2a.png", "/reward-tier-2b.png"],
-    image: "/reward-tier-2a.png",
-    totalSupply: 50,
+    image: "/tier_2.png",
+    totalSupply: "1000+",
     rewardType: 'first-come'
   },
   {
     id: 3,
     tier: "TIER 1",
-    title: "Stay Tuned!",
+    title: "Basic Merch",
     description: "Your first milestone in the hunt. A collector's exclusive for those who collect 5 POAPs.",
     requiredPoaps: 5,
-    image: "/reward-tier-1.png",
-    totalSupply: 100,
+    image: "/tier_1.png",
+    totalSupply: "1000+",
     rewardType: 'first-come'
   }
 ]
 
 function renderDescription(reward: Reward) {
   if (reward.id === 1) {
-    // TIER 3: "Reserved for the most dedicated collectors. Join the raffle below, the more POAPs you collect, the better your chances."
+    // TIER 3: "Reserved for the most dedicated collectors. Be one of the first 90 at the merch booth with 15+ POAPs. Or, join the raffle below to win 1 of the final 10 items."
     return (
       <>
-        <span>Reserved for the most dedicated collectors. </span>
-        <span className="font-monospac font-bold">Join the raffle below</span>
-        <span>, the more POAPs you collect, the better your chances.</span>
+        <span>Reserved for the most dedicated collectors. Be one of the </span>
+        <span className="font-monospac font-bold">first 90 at the merch booth with 15+ POAPs.</span>
+        <span> Or, </span>
+        <span className="font-monospac font-bold">join the raffle below</span>
+        <span> to win 1 of the final 10 items.</span>
       </>
     )
   } else if (reward.id === 2) {
-    // TIER 2: "Your midway reward into the Hunt. Collect 10 POAPs to reach this tier and unlock what lies beyond."
+    // TIER 2: "Your middway reward into the Hunt. Collect 10 POAPs to reach this tier and unlock what lies beyond."
     return (
       <>
-        <span className="font-monospac font-bold">Your midway reward into the Hunt. Collect 10 POAPs</span>
+        <span>Your middway reward into the Hunt. </span>
+        <span className="font-monospac font-bold">Collect 10 POAPs</span>
         <span> to reach this tier and unlock what lies beyond.</span>
       </>
     )
@@ -331,22 +333,22 @@ export default function RewardsSection() {
                           {renderDescription(reward)}
                         </p>
                         <p className="font-monospac font-bold leading-[1.3] text-[16px] w-full">
-                          Total Supply: TBD
+                          Total Supply: {reward.totalSupply}
                         </p>
                       </div>
-                      
+
                       {/* Mobile Reward Type Badge - moved below total supply with 24px spacing */}
                       <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
                         <div className="relative w-4 h-4">
                           <Image
-                            src={reward.rewardType === 'raffle' ? "/frame-icon.svg" : "/run-icon.svg"}
+                            src={reward.rewardType === 'first-come' ? "/run-icon.svg" : "/frame-icon.svg"}
                             alt=""
                             fill
                             className="object-contain"
                           />
                         </div>
                         <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
-                          {reward.rewardType === 'raffle' ? 'Raffle' : 'First Come, First Serve'}
+                          {reward.rewardType === 'fcfs-raffle' ? 'FCFS & Raffle' : reward.rewardType === 'raffle' ? 'Raffle' : 'FCFS'}
                         </p>
                       </div>
                     </div>
@@ -484,22 +486,22 @@ function RewardCard({ reward, index }: { reward: Reward; index: number }) {
             {renderDescription(reward)}
           </p>
           <p className="font-monospac font-bold leading-[28px] text-[18px] w-full">
-            Total Supply: TBD
+            Total Supply: {reward.totalSupply}
           </p>
         </div>
-        
+
         {/* Desktop Reward Type Badge - moved below total supply with 24px spacing */}
         <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
           <div className="relative w-4 h-4">
             <Image
-              src={reward.rewardType === 'raffle' ? "/frame-icon.svg" : "/run-icon.svg"}
+              src={reward.rewardType === 'first-come' ? "/run-icon.svg" : "/frame-icon.svg"}
               alt=""
               fill
               className="object-contain"
             />
           </div>
           <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
-            {reward.rewardType === 'raffle' ? 'Raffle' : 'First Come, First Serve'}
+            {reward.rewardType === 'fcfs-raffle' ? 'FCFS & Raffle' : reward.rewardType === 'raffle' ? 'Raffle' : 'FCFS'}
           </p>
         </div>
       </div>
