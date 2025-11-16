@@ -148,7 +148,7 @@ const rewardsData: Reward[] = [
     title: "Basic Merch",
     description: "Your first milestone in the hunt. A collector's exclusive for those who collect 5 POAPs.",
     requiredPoaps: 5,
-    image: "/tier_1.png",
+    image: "/New Tier 1.png",
     totalSupply: "1000+",
     rewardType: 'first-come'
   }
