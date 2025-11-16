@@ -50,7 +50,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['rewards', 'raffle', 'challenges', 'how-to']
+      const sections = ['rewards', 'challenges', 'how-to']
       const scrollPosition = window.scrollY + 100 // Offset for header height
       let currentSection = ''
 
@@ -105,8 +105,8 @@ export default function Header() {
         {/* Desktop navigation */}
         <nav className="flex gap-4 items-center cursor-pointer">
           <MenuItem text="Rewards" href="#rewards" isActive={activeSection === 'rewards'} />
-          <MenuItem text="Raffle" href="#raffle" isActive={activeSection === 'raffle'} />
           <MenuItem text="Challenges" href="#challenges" isActive={activeSection === 'challenges'} />
+          <MenuItem text="How to" href="#how-to" isActive={activeSection === 'how-to'} />
         </nav>
       </div>
 
@@ -150,18 +150,18 @@ export default function Header() {
               Rewards
             </a>
             <a
-              href="#raffle"
-              className="text-gray-900 hover:text-defi-red transition-colors font-monospac"
-              onClick={(e) => { e.preventDefault(); handleMobileMenuClick('raffle'); }}
-            >
-              Raffle
-            </a>
-            <a
               href="#challenges"
               className="text-gray-900 hover:text-defi-red transition-colors font-monospac"
               onClick={(e) => { e.preventDefault(); handleMobileMenuClick('challenges'); }}
             >
               Challenges
+            </a>
+            <a
+              href="#how-to"
+              className="text-gray-900 hover:text-defi-red transition-colors font-monospac"
+              onClick={(e) => { e.preventDefault(); handleMobileMenuClick('how-to'); }}
+            >
+              How to
             </a>
           </nav>
         </div>

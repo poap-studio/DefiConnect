@@ -3,7 +3,6 @@ import HeroSection from '@/components/HeroSection'
 import AboutSection from '@/components/AboutSection'
 import CollectionSection from '@/components/CollectionSection'
 import RewardsSection from '@/components/RewardsSection'
-import RaffleSection from '@/components/RaffleSection'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -13,7 +12,6 @@ export default function Home() {
       <main>
         <HeroSection />
         <RewardsSection />
-        <RaffleSection />
         <CollectionSection />
         <AboutSection />
       </main>
