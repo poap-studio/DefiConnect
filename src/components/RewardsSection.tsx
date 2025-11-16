@@ -348,7 +348,7 @@ export default function RewardsSection() {
                           />
                         </div>
                         <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
-                          {reward.rewardType === 'fcfs-raffle' ? 'FCFS & Raffle' : reward.rewardType === 'raffle' ? 'Raffle' : 'FCFS'}
+                          {reward.rewardType === 'fcfs-raffle' ? 'First Come First Served & Raffle' : reward.rewardType === 'raffle' ? 'Raffle' : 'First Come First Served'}
                         </p>
                       </div>
                     </div>
@@ -501,7 +501,7 @@ function RewardCard({ reward, index }: { reward: Reward; index: number }) {
             />
           </div>
           <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
-            {reward.rewardType === 'fcfs-raffle' ? 'FCFS & Raffle' : reward.rewardType === 'raffle' ? 'Raffle' : 'FCFS'}
+            {reward.rewardType === 'fcfs-raffle' ? 'First Come First Served & Raffle' : reward.rewardType === 'raffle' ? 'Raffle' : 'First Come First Served'}
           </p>
         </div>
       </div>
