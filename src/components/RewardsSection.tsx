@@ -337,19 +337,50 @@ export default function RewardsSection() {
                       </div>
 
                       {/* Mobile Reward Type Badge - moved below total supply with 24px spacing */}
-                      <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
-                        <div className="relative w-4 h-4">
-                          <Image
-                            src={reward.rewardType === 'first-come' ? "/run-icon.svg" : "/frame-icon.svg"}
-                            alt=""
-                            fill
-                            className="object-contain"
-                          />
+                      {reward.rewardType === 'fcfs-raffle' ? (
+                        <div className="flex flex-col gap-3 items-center w-full">
+                          <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
+                            <div className="relative w-4 h-4">
+                              <Image
+                                src="/frame-icon.svg"
+                                alt=""
+                                fill
+                                className="object-contain"
+                              />
+                            </div>
+                            <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
+                              Raffle
+                            </p>
+                          </div>
+                          <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
+                            <div className="relative w-4 h-4">
+                              <Image
+                                src="/run-icon.svg"
+                                alt=""
+                                fill
+                                className="object-contain"
+                              />
+                            </div>
+                            <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
+                              First Come First Served
+                            </p>
+                          </div>
                         </div>
-                        <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
-                          {reward.rewardType === 'fcfs-raffle' ? 'First Come First Served & Raffle' : reward.rewardType === 'raffle' ? 'Raffle' : 'First Come First Served'}
-                        </p>
-                      </div>
+                      ) : (
+                        <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
+                          <div className="relative w-4 h-4">
+                            <Image
+                              src="/run-icon.svg"
+                              alt=""
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                          <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
+                            First Come First Served
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -490,19 +521,50 @@ function RewardCard({ reward, index }: { reward: Reward; index: number }) {
         </div>
 
         {/* Desktop Reward Type Badge - moved below total supply with 24px spacing */}
-        <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
-          <div className="relative w-4 h-4">
-            <Image
-              src={reward.rewardType === 'first-come' ? "/run-icon.svg" : "/frame-icon.svg"}
-              alt=""
-              fill
-              className="object-contain"
-            />
+        {reward.rewardType === 'fcfs-raffle' ? (
+          <div className="flex flex-col gap-3 items-center w-full">
+            <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
+              <div className="relative w-4 h-4">
+                <Image
+                  src="/frame-icon.svg"
+                  alt=""
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
+                Raffle
+              </p>
+            </div>
+            <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
+              <div className="relative w-4 h-4">
+                <Image
+                  src="/run-icon.svg"
+                  alt=""
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
+                First Come First Served
+              </p>
+            </div>
           </div>
-          <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
-            {reward.rewardType === 'fcfs-raffle' ? 'First Come First Served & Raffle' : reward.rewardType === 'raffle' ? 'Raffle' : 'First Come First Served'}
-          </p>
-        </div>
+        ) : (
+          <div className="bg-white flex gap-2 items-center justify-center pl-3 pr-4 py-2 rounded-[20px]">
+            <div className="relative w-4 h-4">
+              <Image
+                src="/run-icon.svg"
+                alt=""
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="font-monospac font-bold leading-[1.3] text-[#e96652] text-[16px] text-center whitespace-nowrap">
+              First Come First Served
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )
