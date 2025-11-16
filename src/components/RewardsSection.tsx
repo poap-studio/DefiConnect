@@ -5,8 +5,7 @@ import Image from 'next/image'
 
 function RaffleContent() {
   const handleJoinRaffle = () => {
-    // TODO: Add raffle functionality
-    alert('Raffle functionality coming soon!')
+    window.open('https://poap.fun/raffles/deficonnect-poap-treasure-hunt-raffle', '_blank')
   }
 
   return (
